@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% if page.title and page.url != "/" %}{{ page.title }} — {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alice&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+  <link rel="stylesheet" href="{{ '/assets/css/problem.css' | relative_url }}" />
+  {% seo %}
+</head>
+<body>
+
+  <!-- SVG clip-path definition for hero wave (matches original Squarespace divider) -->
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <clipPath id="hero-wave" clipPathUnits="objectBoundingBox">
+        <path d="M-1, 0.877 L-1, 0.877 l0,0 c0,0 0.25,0.123 0.5,0.123 s0.5,-0.123 0.5,-0.123 l0,0l0,0 c0,0 0.25,0.123 0.5,0.123 s0.5,-0.123 0.5,-0.123 l0,0l0,0 c0,0 0.25,0.123 0.5,0.123 s0.5,-0.123 0.5,-0.123 l0,0 L1, -1 L0, -1 z" />
+      </clipPath>
+    </defs>
+  </svg>
+
+  {% include nav.html %}
+
+  {% if page.hero_image %}
+  <section class="hero{% if page.hero_title %} hero--titled{% endif %}">
+    <div class="hero-media">
+      <img src="{{ page.hero_image | relative_url }}"
+           alt="{% if page.hero_title %}{{ page.hero_title }}{% else %}{{ site.title }}{% endif %}" />
+    </div>
+    {% if page.hero_title %}
+    <div class="hero-title-wrap">
+      <h1 class="hero-title">{{ page.hero_title }}</h1>
+    </div>
+    {% endif %}
+  </section>
+  {% endif %}
+
+  <main id="page" class="page-content">
+    <div class="container">
+      {{ content }}
+    </div>
+  </main>
+
+  {% include footer.html %}
+
+  <!-- Mobile nav overlay -->
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true">
+    <ul class="nav-overlay-links">
+      <li><a href="{{ '/' | relative_url }}">Home</a></li>
+      <li><a href="{{ '/top-10-problems/' | relative_url }}">Top 10 Problems</a></li>
+      <li><a href="{{ '/hackathons/' | relative_url }}">Hackathons</a></li>
+      <li><a href="{{ '/about-us/' | relative_url }}">About Us</a></li>
+    </ul>
+  </div>
+
+  <script>
+    const openBtn = document.getElementById('nav-open');
+    const closeBtn = document.getElementById('nav-close');
+    const overlay = document.getElementById('nav-overlay');
+    function openNav() {
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      closeBtn.style.display = 'block';
+      openBtn.style.display = 'none';
+    }
+    function closeNav() {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      closeBtn.style.display = 'none';
+      openBtn.style.display = 'block';
+    }
+    if (openBtn) openBtn.addEventListener('click', openNav);
+    if (closeBtn) closeBtn.addEventListener('click', closeNav);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeNav(); });
+  </script>
+
+</body>
+</html>

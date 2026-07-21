@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ page.problem_title | capitalize }} — {{ page.region_label }} — {{ site.title }}</title>
+  <meta name="description" content="{{ page.problem_desc }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alice&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}" />
+  <link rel="stylesheet" href="{{ '/assets/css/problem.css' | relative_url }}" />
+  <style>
+    :root { --problem-color: {{ page.color }}; }
+  </style>
+  {% seo %}
+</head>
+<body>
+
+  <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+    <defs>
+      <clipPath id="hero-wave" clipPathUnits="objectBoundingBox">
+        <path d="M-1, 0.877 L-1, 0.877 l0,0 c0,0 0.25,0.123 0.5,0.123 s0.5,-0.123 0.5,-0.123 l0,0l0,0 c0,0 0.25,0.123 0.5,0.123 s0.5,-0.123 0.5,-0.123 l0,0l0,0 c0,0 0.25,0.123 0.5,0.123 s0.5,-0.123 0.5,-0.123 l0,0 L1, -1 L0, -1 z" />
+      </clipPath>
+    </defs>
+  </svg>
+
+  {% include nav.html %}
+
+  {% comment %} Pick the region banner image from the URL. {% endcomment %}
+  {% if page.region_url contains 'rural-georgia' %}
+    {% assign region_image = '/assets/images/top-10-headers/diabetes-in-rural-georgia.png' %}
+  {% else %}
+    {% assign region_image = '/assets/images/top-10-headers/diabetes-in-india.png' %}
+  {% endif %}
+
+  <!-- Region banner image (links back to region listing), replaces breadcrumb + h1 -->
+  <div class="problem-region-banner">
+    <div class="container">
+      <a href="{{ page.region_url | relative_url }}" class="problem-region-banner-link" aria-label="{{ page.region_label }}">
+        <img src="{{ region_image | relative_url }}" alt="{{ page.region_label }}" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Colored banner with title, description, Prev/Next -->
+  <div class="problem-banner" style="background-color: {{ page.color }};">
+    <div class="problem-banner-inner container">
+      <p class="problem-banner-title">{{ page.problem_title }}</p>
+      <p class="problem-banner-desc">{{ page.problem_desc }}</p>
+    </div>
+    <div class="problem-nav-btns">
+      {% if page.prev_url != "" %}
+      <a href="{{ page.prev_url }}" class="problem-nav-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 13" height="13" width="17" aria-hidden="true">
+          <g transform="matrix(-1 0 0 -1 17 13)"><g fill="#fff" fill-rule="nonzero">
+            <path d="M1.046 7.066h14.549c.353 0 .639-.283.639-.633a.636.636 0 0 0-.64-.632H1.047a.636.636 0 0 0-.64.632c0 .35.287.633.64.633z"/>
+            <path d="M14.69 6.433l-5.003 4.948a.627.627 0 0 0 0 .894c.25.247.654.247.904 0l5.456-5.394a.627.627 0 0 0 0-.894L10.59.592a.641.641 0 0 0-.904 0 .627.627 0 0 0 0 .894l5.003 4.947z"/>
+          </g></g>
+        </svg>
+        Prev
+      </a>
+      {% endif %}
+      {% if page.next_url != "" %}
+      <a href="{{ page.next_url }}" class="problem-nav-btn">
+        Next
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 13" height="13" width="17" aria-hidden="true">
+          <g><g fill="#fff" fill-rule="nonzero">
+            <path d="M1.046 7.066h14.549c.353 0 .639-.283.639-.633a.636.636 0 0 0-.64-.632H1.047a.636.636 0 0 0-.64.632c0 .35.287.633.64.633z"/>
+            <path d="M14.69 6.433l-5.003 4.948a.627.627 0 0 0 0 .894c.25.247.654.247.904 0l5.456-5.394a.627.627 0 0 0 0-.894L10.59.592a.641.641 0 0 0-.904 0 .627.627 0 0 0 0 .894l5.003 4.947z"/>
+          </g></g>
+        </svg>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Tab navigation -->
+  <div class="problem-tabs" role="tablist">
+    <button class="problem-tab active" onclick="openTab(event,'tab1')" role="tab" aria-selected="true" aria-controls="tab1">Importance</button>
+    <button class="problem-tab" onclick="openTab(event,'tab2')" role="tab" aria-selected="false" aria-controls="tab2">Who is Affected</button>
+    <button class="problem-tab" onclick="openTab(event,'tab3')" role="tab" aria-selected="false" aria-controls="tab3">Current Practice</button>
+    <button class="problem-tab" onclick="openTab(event,'tab4')" role="tab" aria-selected="false" aria-controls="tab4">Call for Action</button>
+  </div>
+
+  <!-- Tab content panels — populated from page content -->
+  <div class="problem-tab-body">
+    {{ content }}
+  </div>
+
+  {% include footer.html %}
+
+  <!-- Mobile nav overlay -->
+  <div class="nav-overlay" id="nav-overlay" aria-hidden="true">
+    <ul class="nav-overlay-links">
+      <li><a href="{{ '/' | relative_url }}">Home</a></li>
+      <li><a href="{{ '/top-10-problems/' | relative_url }}">Top 10 Problems</a></li>
+      <li><a href="{{ '/hackathons/' | relative_url }}">Hackathons</a></li>
+      <li><a href="{{ '/about-us/' | relative_url }}">About Us</a></li>
+    </ul>
+  </div>
+
+  <script>
+    // Nav overlay
+    const openBtn = document.getElementById('nav-open');
+    const closeBtn = document.getElementById('nav-close');
+    const overlay = document.getElementById('nav-overlay');
+    function openNav() { overlay.classList.add('is-open'); overlay.setAttribute('aria-hidden','false'); closeBtn.style.display='block'; openBtn.style.display='none'; }
+    function closeNav() { overlay.classList.remove('is-open'); overlay.setAttribute('aria-hidden','true'); closeBtn.style.display='none'; openBtn.style.display='block'; }
+    if (openBtn) openBtn.addEventListener('click', openNav);
+    if (closeBtn) closeBtn.addEventListener('click', closeNav);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+
+    // Tab switching
+    function openTab(evt, tabId) {
+      document.querySelectorAll('.tab-data').forEach(el => el.style.display = 'none');
+      document.querySelectorAll('.problem-tab').forEach(btn => { btn.classList.remove('active'); btn.setAttribute('aria-selected','false'); });
+      document.getElementById(tabId).style.display = 'block';
+      evt.currentTarget.classList.add('active');
+      evt.currentTarget.setAttribute('aria-selected','true');
+    }
+
+    // Show only tab1 on load, hide others
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.tab-data').forEach((el, i) => {
+        el.style.display = i === 0 ? 'block' : 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>

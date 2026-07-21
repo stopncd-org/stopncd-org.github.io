@@ -1,0 +1,33 @@
+title: "StopNCD — Together, We Can Stop Non-Communicable Diseases"
+description: >-
+  A collaboration to raise awareness and facilitate technology-driven solutions
+  for noncommunicable diseases such as diabetes, cardiovascular conditions, and cancer.
+url: "https://www.stopncd.org"
+baseurl: ""
+
+email: innovate@stopncd.org
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - agents/
+  - .git/
+  - vendor/
+
+# Default front matter
+defaults:
+  - scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"

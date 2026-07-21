@@ -1,0 +1,21 @@
+<header class="site-header">
+  <div class="header-inner">
+    <a class="header-logo" href="{{ '/' | relative_url }}" aria-label="StopNCD Home">
+      <img src="{{ '/assets/images/logo.png' | relative_url }}"
+           alt="STOPNCD.org — Together, We Can Stop Non-Communicable Diseases"
+           height="60" />
+    </a>
+    <nav class="header-nav" aria-label="Main navigation">
+      <ul>
+        <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="is-active"{% endif %}>Home</a></li>
+        <li><a href="{{ '/top-10-problems/' | relative_url }}" {% if page.url contains '/top-10-problems' %}class="is-active"{% endif %}>Top 10 Problems</a></li>
+        <li><a href="{{ '/hackathons/' | relative_url }}" {% if page.url contains '/hackathons' %}class="is-active"{% endif %}>Hackathons</a></li>
+        <li><a href="{{ '/about-us/' | relative_url }}" {% if page.url contains '/about-us' %}class="is-active"{% endif %}>About Us</a></li>
+      </ul>
+    </nav>
+    <button class="nav-hamburger" id="nav-open" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+    <button class="nav-close-btn" id="nav-close" aria-label="Close menu" style="display:none">&#x2715;</button>
+  </div>
+</header>
