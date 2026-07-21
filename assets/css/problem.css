@@ -26,6 +26,12 @@
 }
 
 /* ── Problem index page: breadcrumb + title ─────────────────────── */
+.problem-page-header .container,
+.problem-page-header {
+  max-width: 1500px;
+  padding-left: 4vw;
+  padding-right: 4vw;
+}
 .problem-breadcrumb {
   font-family: "Work Sans", sans-serif;
   font-size: 0.95rem;
