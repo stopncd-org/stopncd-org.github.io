@@ -176,10 +176,20 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 0;
-  /* Break out of the .container max-width so the grid is full-viewport-width */
+  /*
+   * Break out of the .container (max-width: 1100px) so the grid is full-width,
+   * then add padding that replicates the original Squarespace content area:
+   *   max-width: 1500px, padding: 0 4vw
+   * Formula: max(4vw, (100vw - 1500px)/2 + 4vw)
+   *   - At ≤1500px viewport: padding = 4vw  (e.g. 768px → 31px, 1280px → 51px)
+   *   - At >1500px viewport: padding = (100vw-1500px)/2 + 4vw  (1920px → 287px)
+   * This gives the same column counts as the original at every breakpoint.
+   */
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   width: 100vw;
+  padding-left:  max(4vw, calc((100vw - 1500px) / 2 + 4vw));
+  padding-right: max(4vw, calc((100vw - 1500px) / 2 + 4vw));
   margin-top: 2rem;
   margin-bottom: 0;
 }
@@ -270,9 +280,5 @@
   .problem-tab:hover {
     border-left: 4px solid var(--problem-color, #1470af);
     border-bottom: 4px solid transparent;
-  }
-
-  .prob-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
 }
